@@ -8,7 +8,7 @@
         "ElasticTranscoderPipelineArn" : {
             "Description" : "The Arn of the Lambda function used to create Elastic Transcoder Pipelines.",
             "Type"        : "String",
-            "Default"     : "arn:aws:lambda:us-east-1:252486826203:function:ElasticTranscoderPipeline",
+            "Default"     : "",
             "AllowedPattern" : "^arn:aws(?:-us-gov|-cn)?:lambda:.*?:[0-9]{12}:function:.*$"
         },
 		"PresetId" : {
@@ -30,8 +30,7 @@
             "MinLength"   : 3,
             "MaxLength"   : 63,
             "AllowedPattern" : "^[a-z](?:(?:\\.(?!\\.))|-|[a-zA-Z0-9]){1,61}[a-z]$",
-            "ConstraintDescription" : "Member must satisfy regular expression pattern: ^[a-z](?:(?:\\.(?!\\.))|-|[a-zA-Z0-9]){1,61}[a-z]$",
-			"Default": "mhaken-rawvideo"
+            "ConstraintDescription" : "Member must satisfy regular expression pattern: ^[a-z](?:(?:\\.(?!\\.))|-|[a-zA-Z0-9]){1,61}[a-z]$"
         },
         "VideoOutputBucket"            : {
             "Description" : "The bucket where the transcoded videos will be stored.",
@@ -39,8 +38,7 @@
             "MinLength"   : 3,
             "MaxLength"   : 63,
             "AllowedPattern" : "^[a-z](?:(?:\\.(?!\\.))|-|[a-zA-Z0-9]){1,61}[a-z]$",
-            "ConstraintDescription" : "Member must satisfy regular expression pattern: ^[a-z](?:(?:\\.(?!\\.))|-|[a-zA-Z0-9]){1,61}[a-z]$",
-			"Default" : "mhaken-video"
+            "ConstraintDescription" : "Member must satisfy regular expression pattern: ^[a-z](?:(?:\\.(?!\\.))|-|[a-zA-Z0-9]){1,61}[a-z]$"
         },
         "ThumbnailBucket"              : {
             "Description" : "The bucket where the video thumbnails will be stored.",
@@ -48,8 +46,7 @@
             "MinLength"   : 3,
             "MaxLength"   : 63,
             "AllowedPattern" : "^[a-z](?:(?:\\.(?!\\.))|-|[a-zA-Z0-9]){1,61}[a-z]$",
-            "ConstraintDescription" : "Member must satisfy regular expression pattern: ^[a-z](?:(?:\\.(?!\\.))|-|[a-zA-Z0-9]){1,61}[a-z]$",
-			"Default" : "mhaken-thumbnails"
+            "ConstraintDescription" : "Member must satisfy regular expression pattern: ^[a-z](?:(?:\\.(?!\\.))|-|[a-zA-Z0-9]){1,61}[a-z]$"
         },
 
         "PipelineName"                 : {
@@ -62,16 +59,14 @@
 
         "NotificationEmail"            : {
             "Description" : "The email address notifications from Elastic Transcoder will be sent to.",
-            "Type"        : "String",
-            "Default"     : "michael.haken@outlook.com"
+            "Type"        : "String"
         },
 
         "OrganizationTag"              : {
             "Description" : "The organization this account is associated with",
             "Type"        : "String",
             "AllowedPattern" : "^\\S{2,}$",
-            "ConstraintDescription" : "Member must satisfy regular expression pattern: ^\\S{2,}$",
-			"Default" : "bamcis.io"
+            "ConstraintDescription" : "Member must satisfy regular expression pattern: ^\\S{2,}$"
         },
         "ApplicationTag"               : {
             "Description" : "The application this account is associated with",
