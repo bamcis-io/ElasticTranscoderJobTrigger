@@ -4,6 +4,7 @@ is uploaded to S3.
 
 ## Table of Contents
 - [Usage](#usage)
+- [Dependencies](#dependencies)
 - [Revision History](#revision-history)
 
 ## Usage
@@ -26,6 +27,13 @@ Bucket -> Lambda Permission -> Lambda Function -> ET Pipeline -> Bucket
 Using SNS as the trigger event solves this circular dependency because the SNS topic policy doesn't require that the input
 bucket or the Lambda function exist before being created, thus the SNS topic that S3 will publish to and that will trigger 
 the Lambda function can be created before either of those resources.
+
+## Dependencies
+
+This serverless application uses a Lambda function that deploys a custom resource for the Elastic Transcoder pipeline, that
+app can be found [here](https://github.com/bamcis-io/ElasticTranscoderPipeline). You will need to deploy that serverless app
+in the same region you want to launch jobs to perform transcoding (i.e. the same region you deploy this serverless app) before
+running this.
 
 ## Revision History
 
