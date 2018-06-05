@@ -8,7 +8,6 @@
         "ElasticTranscoderPipelineArn" : {
             "Description" : "The Arn of the Lambda function used to create Elastic Transcoder Pipelines.",
             "Type"        : "String",
-            "Default"     : "",
             "AllowedPattern" : "^arn:aws(?:-us-gov|-cn)?:lambda:.*?:[0-9]{12}:function:.*$"
         },
 		"PresetId" : {

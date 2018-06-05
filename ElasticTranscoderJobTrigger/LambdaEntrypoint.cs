@@ -3,8 +3,10 @@ using Amazon.ElasticTranscoder.Model;
 using Amazon.Lambda.Core;
 using Amazon.Lambda.SNSEvents;
 using BAMCIS.AWSLambda.Common;
+using BAMCIS.AWSLambda.Common.Events.SNS;
 using Newtonsoft.Json;
 using System;
+using System.IO;
 using System.Threading.Tasks;
 using static Amazon.Lambda.SNSEvents.SNSEvent;
 
@@ -66,7 +68,7 @@ namespace BAMCIS.LambdaFunctions.ElasticTranscoderJobTrigger
 
                         DateTime Now = DateTime.Now;
                         string Prefix = $"{Now.Year.ToString()}/{Now.Month.ToString("00")}";
-                        string FileName = Key.Substring(Key.LastIndexOf("/") + 1);
+                        string FileName = Path.GetFileNameWithoutExtension(Key);
 
                         this._Context.LogInfo($"Submitting job for {Key}.");
 
@@ -86,7 +88,7 @@ namespace BAMCIS.LambdaFunctions.ElasticTranscoderJobTrigger
                             {
                                 PresetId = Preset.Preset.Id,
                                 Rotate = "0",
-                                ThumbnailPattern = $"{Prefix}/{FileName}/{{count}}",
+                                ThumbnailPattern = $"{Prefix}/{FileName}_{{count}}",
                                 Key = $"{Prefix}/{FileName}.{Preset.Preset.Container}"
                             }
                         };
@@ -94,6 +96,15 @@ namespace BAMCIS.LambdaFunctions.ElasticTranscoderJobTrigger
                         try
                         {
                             CreateJobResponse Response = await this._ETClient.CreateJobAsync(Request);
+
+                            if ((int)Response.HttpStatusCode >= 200 && (int)Response.HttpStatusCode <= 299)
+                            {
+                                this._Context.LogInfo($"Successfully submitted job for {Response.Job.Input.Key} with id {Response.Job.Id} and arn {Response.Job.Arn}.");
+                            }
+                            else
+                            {
+                                this._Context.LogError($"Failed to successfully submit job for {Response.Job.Input.Key} with status code: {(int)Response.HttpStatusCode}");
+                            }
                         }
                         catch (Exception e)
                         {
